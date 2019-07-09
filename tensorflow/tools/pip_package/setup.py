@@ -264,7 +264,7 @@ setup(
     author='Google Inc.',
     author_email='packages@tensorflow.org',
     # Contained modules and scripts.
-    packages=find_packages(),
+    packages=[*find_packages(),"pyronn_layers"],
     entry_points={
         'console_scripts': CONSOLE_SCRIPTS,
     },

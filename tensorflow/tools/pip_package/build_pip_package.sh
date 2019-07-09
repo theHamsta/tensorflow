@@ -153,6 +153,8 @@ function prepare_src() {
   cp tensorflow/tools/pip_package/MANIFEST.in ${TMPDIR}
   cp tensorflow/tools/pip_package/README ${TMPDIR}
   cp tensorflow/tools/pip_package/setup.py ${TMPDIR}
+  cp -r pyronn_layers ${TMPDIR}
+  cp -r bazel-bin/pyronn_layers/*.so ${TMPDIR}/pyronn_layers
 
   rm -f ${TMPDIR}/tensorflow/libtensorflow_framework.so
   rm -f ${TMPDIR}/tensorflow/libtensorflow_framework.so.[0-9].*
@@ -211,7 +213,7 @@ function build_wheel() {
 
   rm -f MANIFEST
   echo $(date) : "=== Building wheel"
-  "${PYTHON_BIN_PATH:-python}" setup.py bdist_wheel ${PKG_NAME_FLAG} >/dev/null
+  "${PYTHON_BIN_PATH:-python}" setup.py bdist_wheel ${PKG_NAME_FLAG}
   mkdir -p ${DEST}
   cp dist/* ${DEST}
   popd > /dev/null
@@ -309,9 +311,9 @@ function main() {
 
   build_wheel "$SRCDIR" "$DSTDIR" "$PKG_NAME_FLAG"
 
-  if [[ $CLEANSRC -ne 0 ]]; then
-    rm -rf "${TMPDIR}"
-  fi
+# if [[ $CLEANSRC -ne 0 ]]; then
+#   rm -rf "${TMPDIR}"
+# fi
 }
 
 main "$@"
